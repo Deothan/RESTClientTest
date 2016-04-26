@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         new HttpRequestTask().execute();
     }
 
+    /**
+     * Currently not used but can be used to make a menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -42,17 +45,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-            new HttpRequestTask().execute();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    /**
+     * This is the Button listener for the refresh button.
+     * @param view
+     */
+    public void refresh_btn(View view) {
+        new HttpRequestTask().execute();
     }
 
     /**
@@ -70,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * My async https request
+     */
     private class HttpRequestTask extends AsyncTask<Void, Void, Greeting> {
         @Override
         protected Greeting doInBackground(Void... params) {
