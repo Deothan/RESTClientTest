@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -71,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * My async https request
      */
-    private class HttpRequestTask extends AsyncTask<Void, Void, Greeting> {
+    private class HttpRequestTask extends AsyncTask<Void, Void, Greeting[]> {
         @Override
-        protected Greeting doInBackground(Void... params) {
+        protected Greeting[] doInBackground(Void... params) {
             try {
-                final String url = "http://rest-service.guides.spring.io/greeting";
+                final String url = "http://13.79.170.252:8080/users";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                Greeting greeting = restTemplate.getForObject(url, Greeting.class);
+                Greeting[] greeting = restTemplate.getForObject(url, Greeting[].class);
                 return greeting;
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);
@@ -88,11 +89,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Greeting greeting) {
+        protected void onPostExecute(Greeting[] greeting) {
             TextView greetingIdText = (TextView) findViewById(R.id.id_value);
-            TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            greetingIdText.setText(greeting.getId());
-            greetingContentText.setText(greeting.getContent());
+            greetingIdText.setText(String.valueOf(greeting.length));
         }
 
     }
